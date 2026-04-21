@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U discohook"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis for KV Storage
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+
+  # Webdis (Exposes Redis over HTTP for Discohook's RedisKV)
+  webdis:
+    image: anapsix/webdis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+
+  # Frontend Site / Editor
+  site:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM node:20-alpine
+        RUN corepack enable yarn
+        WORKDIR /app
+        COPY . .
+        RUN yarn install
+        WORKDIR /app/packages/site
+        RUN npm run build
+        CMD ["npm", "run", "start"]
+    ports:
+      - "8788:8788" # Exposing the frontend wrangler port
+    environment:
+      - DATABASE_URL
+      - REDIS_URL=http://webdis:7379
+      - ENVIRONMENT=production
+    depends_on:
+      db:
+        condition: service_healthy
+      webdis:
+        condition: service_started
+
+volumes:
+  db-data:
+  redis-data:
