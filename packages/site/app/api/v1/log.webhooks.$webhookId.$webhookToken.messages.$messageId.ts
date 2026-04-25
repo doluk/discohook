@@ -104,10 +104,10 @@ export const action = async ({ request, context, params }: ActionArgs) => {
     // they have access to (and reduces our server's API calls in such cases)
     (now.getTime() - messageIdSnowflake.timestamp > 15000 ||
       // Don't allow future timestamps
-      messageIdSnowflake.timestamp - now.getTime() > 0)
+      messageIdSnowflake.timestamp - now.getTime() > 600)
   ) {
     throw json(
-      { message: "Message is too old or the snowflake is invalid" },
+      { message: "Message is too old or the snowflake is invalid" + `${messageId} message timestamp ${messageIdSnowflake.timestamp} ${now.getTime()}` },
       { status: 400, headers },
     );
   }

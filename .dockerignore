@@ -1,0 +1,91 @@
+# Version Control
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Yarn
+.yarn/cache
+.yarn/unplugged
+.yarn/install-state.gz
+.yarn/build-state.yml
+.yarnrc.yml
+
+# Lock files (can be included if needed for reproducible builds)
+# Uncomment if you want to include them:
+# yarn.lock
+# bun.lockb
+
+# Build outputs
+build
+dist
+.cache
+*.tsbuildinfo
+
+# Wrangler
+.wrangler
+.dev.vars
+wrangler.toml.local
+
+# Drizzle
+drizzle/meta
+
+# Remix
+.remix
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Testing
+coverage
+.nyc_output
+
+# Temporary files
+*.tmp
+*.temp
+tmp
+temp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+*.md
+docs
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose*.yaml
+docker-compose*.yml
+
+# Misc
+LICENSE
+LICENSE.txt
