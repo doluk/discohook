@@ -42,8 +42,16 @@ services:
       - REDIS_URL=redis://user:password@webdis:7379/0
       - ENVIRONMENT=dev
       - DISCOHOOK_ORIGIN=http://site:8788
-    volumes:
-      - ./packages/bot/.dev.vars:/app/packages/bot/.dev.vars:ro
+      - DISCORD_APPLICATION_ID=${DISCORD_APPLICATION_ID:-}
+      - DISCORD_PUBLIC_KEY=${DISCORD_PUBLIC_KEY:-}
+      - DISCORD_TOKEN=${DISCORD_TOKEN:-}
+      - DISCORD_PROXY_API=${DISCORD_PROXY_API:-}
+      - TOKEN_SECRET=${TOKEN_SECRET:-}
+      - APPLICATIONS_RAW=${APPLICATIONS_RAW:-}
+      - BOUNCER_ORIGIN=${BOUNCER_ORIGIN:-}
+      - BOUNCER_JWT_KEY=${BOUNCER_JWT_KEY:-}
+      - DEV_GUILD_ID=${DEV_GUILD_ID:-}
+      - DEV_OWNER_ID=${DEV_OWNER_ID:-}
     depends_on:
       db:
         condition: service_healthy
@@ -72,8 +80,18 @@ services:
       - BOTS_ORIGIN=http://bot:8787
       - LEGACY_ORIGIN=http://magic-backup-importer:8789
       - LINK_ORIGIN=http://link:8790
-    volumes:
-      - ./packages/site/.dev.vars:/app/packages/site/.dev.vars:ro
+      - SESSION_SECRET=${SESSION_SECRET:-}
+      - TOKEN_SECRET=${TOKEN_SECRET:-}
+      - ENC_SECRET=${ENC_SECRET:-}
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID:-}
+      - DISCORD_CLIENT_SECRET=${DISCORD_CLIENT_SECRET:-}
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN:-}
+      - DISCORD_PROXY_API=${DISCORD_PROXY_API:-}
+      - DISCORD_SUPPORT_INVITE_CODE=${DISCORD_SUPPORT_INVITE_CODE:-discohook-668218342779256857}
+      - KOFI_WEBHOOK_TOKEN=${KOFI_WEBHOOK_TOKEN:-}
+      - CRYPTO_ALERTS_TOKEN=${CRYPTO_ALERTS_TOKEN:-}
+      - BITCOIN_ADDRESS=${BITCOIN_ADDRESS:-}
+      - GIST_TOKEN=${GIST_TOKEN:-}
     depends_on:
       bot:
         condition: service_started
@@ -99,8 +117,6 @@ services:
       - "8789:8789"
     environment:
       - DISCOHOOK_ORIGIN=http://site:8788
-    volumes:
-      - ./packages/magic-backup-importer/.dev.vars:/app/packages/magic-backup-importer/.dev.vars:ro
     depends_on:
       site:
         condition: service_started
@@ -121,8 +137,6 @@ services:
       - "8790:8790"
     environment:
       - DISCOHOOK_ORIGIN=http://site:8788
-    volumes:
-      - ./packages/link/.dev.vars:/app/packages/link/.dev.vars:ro
     depends_on:
       site:
         condition: service_started
