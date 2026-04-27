@@ -71,8 +71,9 @@ export const loader = async ({ request, context, params }: LoaderArgs) => {
   // }
 
   const auth = getDiscordAuth(context);
+  const userAuth = await auth.isAuthenticated(request);
 
-  if (!user || !user[`${method}Id`] || force) {
+  if (!userAuth || !userAuth[`${method}Id`] || force) {
     const { getSession, commitSession } = getSessionStorage(context);
     const session = await getSession(request.headers.get("Cookie"));
 

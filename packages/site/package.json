@@ -54,7 +54,6 @@
     "react-i18next": "^15.5.1",
     "react-lazy-load-image-component": "^1.6.2",
     "react-select": "^5.8.0",
-    "remix-auth": "^4.2.0",
     "remix-auth-discord": "discohook/remix-auth-discord",
     "remix-i18next": "6.4.1",
     "remix-utils": "^7.6.0",

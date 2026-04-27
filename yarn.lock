@@ -4772,7 +4772,6 @@ cron-parser@discohook/cron-parser:
     react-i18next: "npm:^15.5.1"
     react-lazy-load-image-component: "npm:^1.6.2"
     react-select: "npm:^5.8.0"
-    remix-auth: "npm:^4.2.0"
     remix-auth-discord: discohook/remix-auth-discord
     remix-i18next: "npm:6.4.1"
     remix-utils: "npm:^7.6.0"
@@ -9510,13 +9509,6 @@ remix-auth-discord@discohook/remix-auth-discord:
   languageName: node
   linkType: hard
 
-"remix-auth@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "remix-auth@npm:4.2.0"
-  checksum: 10c0/e01f6e18acbac801584c0a0127c29846923e229fe5f630065fc4b277e0721a34405dbb6bdb4736be578653d60600cbdef2f0e1920817fbcde559882e7b2e03af
-  languageName: node
-  linkType: hard
-
 "remix-i18next@npm:6.4.1":
   version: 6.4.1
   resolution: "remix-i18next@npm:6.4.1"
@@ -10106,7 +10098,7 @@ remix-auth-discord@discohook/remix-auth-discord:
 
 "store@file:../store::locator=discohook-bot%40workspace%3Apackages%2Fbot":
   version: 0.0.0
-  resolution: "store@file:../store#../store::hash=26cc4a&locator=discohook-bot%40workspace%3Apackages%2Fbot"
+  resolution: "store@file:../store#../store::hash=381761&locator=discohook-bot%40workspace%3Apackages%2Fbot"
   dependencies:
     discord-api-types: "npm:^0.38.32"
     discord-snowflake: "npm:^2.0.0"
@@ -10116,7 +10108,7 @@ remix-auth-discord@discohook/remix-auth-discord:
     tif-snowflake: discohook/snowflake
     zod: "npm:^4.1.5"
     zodix: "npm:@coji/zodix@^0.5.0"
-  checksum: 10c0/64f1d47dc027f67c0ede25714cecd88a37050ff2d3b7e09de3443240f82d8325754418c704aedf5ea437397687eb418bffae7d5bccaa0b51bac968238cf25522
+  checksum: 10c0/73142737b5013bea3a1f910b0f915665fd3b93252956edcb3695764927e310bc4dc301ffa52f380ce21461035980454f94a3d6e2829d7e202bbb574964d2e740
   languageName: node
   linkType: hard
 
