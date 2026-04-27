@@ -66,7 +66,7 @@ This project started out using Cloudflare KV, but it was exorbitantly expensive,
 
 ### Contributing
 
-Before submitting your pull request, please remember to run `npx biome check .` to check for errors, then `yarn fix` to format. This repository uses [Biome](https://biomejs.dev), not ESLint/Prettier. You may also want to install the [Biome extension for your editor](https://biomejs.dev/guides/integrate-in-editor).
+Before submitting your pull request, please remember to run `yarn biome check .` to check for errors, then `yarn fix` to format. This repository uses [Biome](https://biomejs.dev), not ESLint/Prettier. You may also want to install the [Biome extension for your editor](https://biomejs.dev/guides/integrate-in-editor).
 
 As far as style preferences not covered by the [Biome configuration](/biome.json):
 
@@ -87,6 +87,37 @@ If you would also like to work on gateway event processing (the "response" logic
 Run `yarn dev:site` to start a miniflare server for the site.
 
 If you want to develop `magic-backup-importer`, also run `yarn dev:backups` after [setting up its environment](/packages/magic-backup-importer/README.md#development). This will be hosted on http://localhost:8789 by default. To save a backup to the local database, uncomment the execution of the `saveBackup()` method in the index route's `useEffect` callback.
+
+### Docker Compose
+
+Use exported environment variables (or a local shell env manager) before starting the stack:
+
+```sh
+export DISCORD_APPLICATION_ID=...
+export DISCORD_PUBLIC_KEY=...
+export DISCORD_TOKEN=...
+export TOKEN_SECRET=...
+export SESSION_SECRET=...
+export ENC_SECRET=...
+export DISCORD_CLIENT_ID=...
+export DISCORD_CLIENT_SECRET=...
+export DISCORD_BOT_TOKEN=...
+export DISCORD_SUPPORT_INVITE_CODE=...
+yarn docker:up
+```
+
+Optional variables supported by compose include:
+
+- `DISCORD_PROXY_API`
+- `APPLICATIONS_RAW`
+- `BOUNCER_ORIGIN`
+- `BOUNCER_JWT_KEY`
+- `DEV_GUILD_ID`
+- `DEV_OWNER_ID`
+- `KOFI_WEBHOOK_TOKEN`
+- `CRYPTO_ALERTS_TOKEN`
+- `BITCOIN_ADDRESS`
+- `GIST_TOKEN`
 
 ## Deployment
 

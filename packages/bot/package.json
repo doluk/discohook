@@ -6,12 +6,11 @@
   "private": true,
   "main": "src/server.ts",
   "scripts": {
-    "start": "tsx src/server.ts",
-    "dev": "wrangler dev src/server.ts --persist-to=../../persistence",
+    "start": "miniflare --wrangler-config wrangler.toml --host 0.0.0.0 --port 8787",
+    "dev": "miniflare --wrangler-config wrangler.toml --host 0.0.0.0 --port 8787 --watch",
     "tunnel": "cloudflared tunnel --url http://localhost:8787",
     "register": "tsx src/register.ts",
-    "deploy": "wrangler deploy --env=production",
-    "deploy-preview": "wrangler deploy --env=preview"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "license": "MIT",
@@ -37,8 +36,9 @@
     "dotenv": "^16.0.3",
     "mocha": "^10.2.0",
     "sinon": "^17.0.0",
+    "miniflare": "^3.20250129.0",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
-    "wrangler": "^3.107.3"
+    "workerd": "^1.20250129.0"
   }
 }

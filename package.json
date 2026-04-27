@@ -5,10 +5,10 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev:bot": "cd packages/bot && npm run dev",
-    "bot-ws": "cd packages/bot-ws && npm run bot",
-    "dev:site": "cd packages/site && npm run dev",
-    "dev:backups": "cd packages/magic-backup-importer && npm run dev",
+    "dev:bot": "yarn workspace discohook-bot dev",
+    "bot-ws": "yarn workspace discohook-bot-ws dev",
+    "dev:site": "yarn workspace discohook-site dev",
+    "dev:backups": "yarn workspace magic-backup-importer dev",
     "lint": "biome lint .",
     "format": "biome format . --write",
     "fix": "biome check --write .",
@@ -16,6 +16,9 @@
     "db-migrate": "drizzle-kit migrate",
     "db-push": "drizzle-kit push",
     "db-studio": "drizzle-kit studio",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
     "refresh-store": "cd packages/bot && yarn && cd ../site && yarn && cd ../bot-rw && yarn"
   },
   "workspaces": [
