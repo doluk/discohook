@@ -4772,7 +4772,9 @@ cron-parser@discohook/cron-parser:
     react-i18next: "npm:^15.5.1"
     react-lazy-load-image-component: "npm:^1.6.2"
     react-select: "npm:^5.8.0"
+    remix-auth: "npm:^3.6.0"
     remix-auth-discord: discohook/remix-auth-discord
+    remix-auth-oauth2: "npm:^1.11.2"
     remix-i18next: "npm:6.4.1"
     remix-utils: "npm:^7.6.0"
     robots-parser: "npm:^3.0.1"
