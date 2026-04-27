@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # PostgreSQL Database
@@ -23,7 +23,34 @@ services:
     environment:
       - LOCAL_REDIS=true
     ports:
-      - '7379:7379'
+      - "7379:7379"
+
+  # Primary interactions worker
+  bot:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM node:20-bookworm-slim
+        RUN corepack enable yarn
+        RUN apt-get update && apt-get install -y git
+        WORKDIR /app
+        COPY . .
+        RUN yarn install
+        CMD ["yarn", "workspace", "discohook-bot", "start"]
+    ports:
+      - "8787:8787"
+    environment:
+      - DATABASE_URL=${DB_URL:-postgres://postgres:postgres@db:5432}
+      - REDIS_URL=redis://user:password@webdis:7379/0
+      - ENVIRONMENT=dev
+      - DISCOHOOK_ORIGIN=http://site:8788
+    volumes:
+      - ./packages/bot/.dev.vars:/app/packages/bot/.dev.vars:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      webdis:
+        condition: service_started
 
   # Frontend Site / Editor
   site:
@@ -36,23 +63,71 @@ services:
         WORKDIR /app
         COPY . .
         RUN yarn install
-        WORKDIR /app/packages/site
-        RUN yarn build
-        CMD ["yarn", "start"]
+        RUN yarn workspace discohook-site build
+        CMD ["yarn", "workspace", "discohook-site", "start"]
     ports:
-      - "8788:8788" # Exposing the frontend wrangler port
+      - "8788:8788"
     environment:
       - DATABASE_URL=${DB_URL:-postgres://postgres:postgres@db:5432}
       - REDIS_URL=redis://user:password@webdis:7379/0
-      - ENVIRONMENT=production
+      - ENVIRONMENT=dev
+      - BOTS_ORIGIN=http://bot:8787
+      - LEGACY_ORIGIN=http://magic-backup-importer:8789
+      - LINK_ORIGIN=http://link:8790
     volumes:
       - ./packages/site/.dev.vars:/app/packages/site/.dev.vars:ro
     depends_on:
+      bot:
+        condition: service_started
       db:
         condition: service_healthy
       webdis:
         condition: service_started
 
+  # Legacy backup import worker
+  magic-backup-importer:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM node:20-bookworm-slim
+        RUN corepack enable yarn
+        RUN apt-get update && apt-get install -y git
+        WORKDIR /app
+        COPY . .
+        RUN yarn install
+        RUN yarn workspace magic-backup-importer build
+        CMD ["yarn", "workspace", "magic-backup-importer", "start"]
+    ports:
+      - "8789:8789"
+    environment:
+      - DISCOHOOK_ORIGIN=http://site:8788
+    volumes:
+      - ./packages/magic-backup-importer/.dev.vars:/app/packages/magic-backup-importer/.dev.vars:ro
+    depends_on:
+      site:
+        condition: service_started
+
+  # Link redirect worker
+  link:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM node:20-bookworm-slim
+        RUN corepack enable yarn
+        RUN apt-get update && apt-get install -y git
+        WORKDIR /app
+        COPY . .
+        RUN yarn install
+        CMD ["yarn", "workspace", "discohook-link", "start"]
+    ports:
+      - "8790:8790"
+    environment:
+      - DISCOHOOK_ORIGIN=http://site:8788
+    volumes:
+      - ./packages/link/.dev.vars:/app/packages/link/.dev.vars:ro
+    depends_on:
+      site:
+        condition: service_started
+
 volumes:
   db-data:
-  redis-data:

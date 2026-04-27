@@ -66,7 +66,7 @@ This project started out using Cloudflare KV, but it was exorbitantly expensive,
 
 ### Contributing
 
-Before submitting your pull request, please remember to run `npx biome check .` to check for errors, then `yarn fix` to format. This repository uses [Biome](https://biomejs.dev), not ESLint/Prettier. You may also want to install the [Biome extension for your editor](https://biomejs.dev/guides/integrate-in-editor).
+Before submitting your pull request, please remember to run `yarn biome check .` to check for errors, then `yarn fix` to format. This repository uses [Biome](https://biomejs.dev), not ESLint/Prettier. You may also want to install the [Biome extension for your editor](https://biomejs.dev/guides/integrate-in-editor).
 
 As far as style preferences not covered by the [Biome configuration](/biome.json):
 
